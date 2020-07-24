@@ -1,7 +1,9 @@
 ﻿using Assimp;
-using NUnit.Framework;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using Vim.DataFormat;
 using Vim.Desktop.Api;
 using Vim.Hackathon;
@@ -27,14 +29,17 @@ namespace Vim.MeshLoader.Plugin
             public IInstance ApiInstance;
         }
 
-        public List<VimMeshData> LoadedMeshes = new List<VimMeshData>();
-        public List<VimInstanceData> LoadedInstances = new List<VimInstanceData>();
+        public static List<VimMeshData> LoadedMeshes = new List<VimMeshData>();
+        public static  List<VimInstanceData> LoadedInstances = new List<VimInstanceData>();
 
-        public bool meshesLoaded;
-        public bool meshesCreated;
+        public static bool meshesLoaded;
+        public static bool meshesCreated;
 
         public ColorRGBA Color = new ColorRGBA(128, 128, 128, 255);
         public AssimpContext context = new AssimpContext();
+        private string collectionName = "models";
+        private string documentName = FileManager.getModelName();
+        private static bool updated;
 
         public static VimMeshData ToMeshData(Assimp.Mesh mesh)
         {
@@ -116,8 +121,9 @@ namespace Vim.MeshLoader.Plugin
             meshesLoaded = true;
         }
 
-        public void LoadVa3CFile(string filePath)
+        public static void LoadVa3CFile(string filePath)
         {
+            
             var va3c = VimHackerProgram.LoadVa3c(filePath);
             LoadedMeshes = va3c.geometries
                 .Select(g => ToMeshData(g.ToGeometryBuilder()))
@@ -129,28 +135,52 @@ namespace Vim.MeshLoader.Plugin
 
             CollectInstances(va3c.obj, geoLookup, Matrix4x4.Identity, LoadedInstances);
             meshesLoaded = true;
+            meshesCreated = false;
+            updated = true;
         }
 
         public override void Init(IVimApi api)
         {
             base.Init(api);
 
+
+
             // TODO: change me!
             //var filePath = @"C:\dev\repos\assimp\test\models\OBJ\WusonOBJ.obj";
             //LoadAssimpFile(filePath);
 
-            var filePath = @"C:\dev\repos\vim-desktop-sdk\test-data\input\BIMSocket2.json";
-            //var filePath = @"C:\dev\repos\vim-desktop-sdk\test-data\input\rac_basic_sample_project.rvt.json";
-            LoadVa3CFile(filePath);
+            //var filePath = @"C:\Users\pderendinger\source\repos\vim-desktop-sdk\test-data\input\BIMSocket2.json";
+            ////var filePath = @"C:\dev\repos\vim-desktop-sdk\test-data\input\rac_basic_sample_project.rvt.json";
+            //LoadVa3CFile(filePath);
+
+            System.AppDomain currentDomain = System.AppDomain.CurrentDomain;
+
+            currentDomain.AssemblyResolve += new ResolveEventHandler(currentDomain_AssemblyResolve);
+
+
+
+            var connected = FireBaseConnection.Connect(collectionName, documentName);
+            if (connected)
+                FireBaseConnection.ReceiveChangesFromDB();
         }
 
         public override void OnFrameUpdate(float deltaTime)
         {
             base.OnFrameUpdate(deltaTime);
 
+            if (updated)
+            {
+                API.Scene.ClearScene();
+                updated = false;
+                return;
+            }
+
             // Mesh creation has to happen in an "OnFrameUpdate" call. 
             if (meshesLoaded && !meshesCreated)
             {
+
+                
+
                 // Create the meshes 
                 foreach (var md in LoadedMeshes)
                 {
@@ -166,8 +196,32 @@ namespace Vim.MeshLoader.Plugin
                         inst.ApiInstance = API.Scene.CreateInstance(mesh.ApiMesh, Matrix4x4.Identity, Color);
                 }
 
+                LoadedInstances.Clear();
+                LoadedMeshes.Clear();
                 meshesCreated = true;
             }
         }
+
+
+        private static Assembly currentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if (args.Name.Contains("Google.Apis.Auth"))
+            {
+                string filename = Path.GetDirectoryName(
+                  System.Reflection.Assembly
+                    .GetExecutingAssembly().Location);
+
+                filename = Path.Combine(filename,
+                  "Google.Apis.Auth.dll");
+
+                if (File.Exists(filename))
+                {
+                    return System.Reflection.Assembly
+                      .LoadFrom(filename);
+                }
+            }
+            return null;
+        }
+
     }
 }

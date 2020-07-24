@@ -28,7 +28,7 @@ namespace Vim.Hackathon
         [DataMember]
         public int specular { get; set; } = 1118481;
         [DataMember]
-        public int shininess { get; set; } = 30;
+        public float shininess { get; set; } = 30;
         [DataMember]
         public double opacity { get; set; } = 1;
         [DataMember]

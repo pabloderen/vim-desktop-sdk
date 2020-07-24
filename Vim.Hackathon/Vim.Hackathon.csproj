@@ -45,39 +45,37 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Vim.BFast">
-      <HintPath>..\lib\Vim.BFast.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.BFast.dll</HintPath>
     </Reference>
     <Reference Include="Vim.Buffers">
-      <HintPath>..\lib\Vim.Buffers.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.Buffers.dll</HintPath>
     </Reference>
-    <Reference Include="Vim.DataFormat, Version=1.1.54.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Vim.DataFormat.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Vim.DataFormat">
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.DataFormat.dll</HintPath>
     </Reference>
     <Reference Include="Vim.DotNetUtilities">
-      <HintPath>..\lib\Vim.DotNetUtilities.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\VIM\Viewer\Vim.DotNetUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Vim.DotNetUtilities.JsonSerializer">
-      <HintPath>..\lib\Vim.DotNetUtilities.JsonSerializer.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.DotNetUtilities.JsonSerializer.dll</HintPath>
     </Reference>
     <Reference Include="Vim.G3d">
-      <HintPath>..\lib\Vim.G3d.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.G3d.dll</HintPath>
     </Reference>
     <Reference Include="Vim.Geometry">
-      <HintPath>..\lib\Vim.Geometry.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.Geometry.dll</HintPath>
     </Reference>
     <Reference Include="Vim.LinqArray">
-      <HintPath>..\lib\Vim.LinqArray.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.LinqArray.dll</HintPath>
     </Reference>
     <Reference Include="Vim.Math3d">
-      <HintPath>..\lib\Vim.Math3d.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.Math3d.dll</HintPath>
     </Reference>
     <Reference Include="Vim.ObjectModel">
-      <HintPath>..\lib\Vim.ObjectModel.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.ObjectModel.dll</HintPath>
     </Reference>
     <Reference Include="Vim.SceneBuilder">
-      <HintPath>..\lib\Vim.SceneBuilder.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.SceneBuilder.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +104,6 @@
     </PackageReference>
     <PackageReference Include="NUnit3TestAdapter">
       <Version>3.17.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.Memory">
-      <Version>4.5.4</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

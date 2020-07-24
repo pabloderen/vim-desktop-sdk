@@ -90,24 +90,27 @@ namespace Vim.Hackathon
             // https://stackoverflow.com/questions/28023734/threejs-json-loader-mixed-faces-and-vertices
 
             var f = 0;
-            while (f < g.data.faces.Count)
+
+            var obscure = removeFourthValue(g.data.faces.ToArray());
+
+            while (f < obscure.Length)
             {
-                var bits = g.data.faces[f++];
+                //var bits = g.data.faces[f++];
 
-                var isTriangle = (bits & 1) == 0;
-                var isQuad = (bits & 1) != 0;
-                var hasMaterial = (bits & 2) != 0;
-                var hasUV = (bits & 4) != 0;
-                var hasVertexUv = (bits & 8) != 0;
-                var hasNormal = (bits & 16) != 0;
-                var hasVertexNormal = (bits & 32) != 0;
-                var hasColor = (bits & 64) != 0;
-                var hasVertexColor = (bits & 128) != 0;
+                //var isTriangle = (bits & 1) == 0;
+                //var isQuad = (bits & 1) != 0;
+                //var hasMaterial = (bits & 2) != 0;
+                //var hasUV = (bits & 4) != 0;
+                //var hasVertexUv = (bits & 8) != 0;
+                //var hasNormal = (bits & 16) != 0;
+                //var hasVertexNormal = (bits & 32) != 0;
+                //var hasColor = (bits & 64) != 0;
+                //var hasVertexColor = (bits & 128) != 0;
 
-                Debug.Assert(bits == 0);
+                //Debug.Assert(bits == 0);
 
                 for (var i=0; i < 3; ++i)
-                    gb.Indices.Add(g.data.faces[f++]);
+                    gb.Indices.Add(obscure[f++]);
             }
 
             gb.Vertices.AddRange(vertices.ToArray());
@@ -122,6 +125,32 @@ namespace Vim.Hackathon
             return gb;
         }
 
+        private static int[] removeFourthValue(int[] floats)
+        {
+            int[] FacesList = new int[] { };
+            int Count = 0;
+            int countinstance = 0;
+
+            foreach (int flt in floats)
+            {
+                if (Count == 0 || Count == 4 || Count == 5)
+                {
+                    if (Count == 5)
+                    {
+                        Count = -1;
+                    }
+                }
+                else
+                {
+                    FacesList = (FacesList ?? Enumerable.Empty<int>()).Concat(new[] { flt }).ToArray();
+                }
+                Count++;
+                countinstance++;
+            }
+            return FacesList;
+        }
+
+
         public static void ProcessNode(DocumentBuilder db, Va3cObject obj, Dictionary<string, int> geometryLookup)
         {
             var transform = Matrix4x4.Identity;
@@ -131,19 +160,19 @@ namespace Vim.Hackathon
                 ProcessNode(db, c, geometryLookup);
         }
 
-        public static void SaveAsVim(this Va3cContainer va3c, string filePath)
+        public static VimScene ToVim(this Va3cContainer va3c)
         {
             var db = new DocumentBuilder();
             var geometryLookup = new Dictionary<string, int>();
             foreach (var g in va3c.geometries)
-            {
-                if (g != null && g.data.vertices.Count > 0 && g.data.faces.Count > 0)
-                    geometryLookup.Add(g.uuid, geometryLookup.Count);
-            }
+                geometryLookup.Add(g.uuid, geometryLookup.Count);
             db.AddGeometries(va3c.geometries.Select(ToGeometryBuilder));
             ProcessNode(db, va3c.obj, geometryLookup);
-            Serializer.Serialize(db.ToDocument(), filePath);
+            return new VimScene(db.ToDocument());
         }
+
+        public static void SaveAsVim(this Va3cContainer va3c, string filePath)
+            => va3c.ToVim().Save(filePath);
 
         public static void SaveAsVa3c(this VimScene vim, string filePath)
             => vim.ToVa3c().Write(filePath);
@@ -185,9 +214,22 @@ namespace Vim.Hackathon
             return objFilePath;
         }
 
+        public static string TestJsonToObj(string filePath, string objFilePath = null)
+        {
+            objFilePath = objFilePath ?? Util.ChangeDirectoryAndExt(filePath, TestOutputFolder, ".obj");
+            LoadVa3c(filePath).ToVim().ToIMesh();
+            return objFilePath;
+        }
+
         public static void Main(string[] args)
         {
-            var output = TestJsonToVim(JsonRacSampleProject, false);
+            //var output = TestJsonToVim(RacSampleProject);
+
+            // TEMP: broken
+            //var output = TestJsonToObj(JsonRacSampleProject);
+
+            var output = TestVimToObj(VimWolfordHouse);
+
             Process.Start(output);
         }
     }

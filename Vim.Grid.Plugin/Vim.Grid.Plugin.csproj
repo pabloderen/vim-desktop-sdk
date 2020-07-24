@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\Users\Christopher Diggins\VIM\Desktop Plugins\</OutputPath>
+    <OutputPath>..\..\..\..\VIM\Desktop Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,51 +40,51 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="VIM">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\VIM.exe</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\VIM\Viewer\VIM.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vim.BFast">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\Vim.BFast.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.BFast.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vim.Buffers">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\Vim.Buffers.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.Buffers.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vim.Collaboration.Client">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\Vim.Collaboration.Client.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\VIM\Viewer\Vim.Collaboration.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vim.Collaboration.Core">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\Vim.Collaboration.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\VIM\Viewer\Vim.Collaboration.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vim.Desktop.Api">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\Vim.Desktop.Api.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\VIM\Viewer\Vim.Desktop.Api.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vim.DotNetUtilities">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\Vim.DotNetUtilities.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.DotNetUtilities.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vim.DotNetUtilities.Logging.Serilog">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\Vim.DotNetUtilities.Logging.Serilog.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\VIM\Viewer\Vim.DotNetUtilities.Logging.Serilog.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vim.G3d">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\Vim.G3d.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.G3d.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vim.Geometry">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\Vim.Geometry.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.Geometry.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vim.LinqArray">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\Vim.LinqArray.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.LinqArray.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vim.Math3d">
-      <HintPath>..\..\..\..\..\Program Files\VIM\Viewer\Vim.Math3d.dll</HintPath>
+      <HintPath>..\..\BIMSocket\VIM\BIMSocketVIM\References\Vim.Math3d.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
